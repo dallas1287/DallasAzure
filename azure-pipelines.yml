@@ -9,11 +9,12 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
+pool:
+  name: AgentPool
+  vmImage: 'windows-latest'
+
 jobs:
 - job: Build
-    pool:
-      vmImage: 'windows-latest'
-    
     steps:
     - task: NuGetToolInstaller@1
 
