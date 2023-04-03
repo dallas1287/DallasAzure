@@ -12,49 +12,47 @@ variables:
 pool:
   vmImage: 'windows-latest'
 
-jobs:
-  - job: Build
-    steps:
-    - task: NuGetToolInstaller@1
+steps:
+- task: NuGetToolInstaller@1
 
-    - task: NuGetCommand@2
-      inputs:
-        restoreSolution: '$(solution)'
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
 
-    - task: UseDotNet@2
-      displayName: 'Install .NET 7.0 SDK'
-      inputs:
-        packageType: 'sdk'
-        version: '7.0.x'
+- task: UseDotNet@2
+  displayName: 'Install .NET 7.0 SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '7.0.x'
 
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'restore'
-        projects: |
-          **/Azure1.csproj
-          **/Azure2.csproj
-          **/UITest.csproj
-        feedsToUse: 'config'
-        nugetConfigPath: 'NuGet.config'
-      displayName: Restore PRSQRL_Nest Nuget Packages
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: |
+      **/Azure1.csproj
+      **/Azure2.csproj
+      **/UITest.csproj
+    feedsToUse: 'config'
+    nugetConfigPath: 'NuGet.config'
+  displayName: Restore PRSQRL_Nest Nuget Packages
 
-    - task: DotNetCoreCLI@2
-      displayName: 'Build PRSQRL'
-      inputs:
-        command: 'build'
-        projects: |
-          **/Azure1.csproj
-          **/Azure2.csproj
-          **/UITest.csproj
-        arguments: '--configuration $(BuildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: 'Build PRSQRL'
+  inputs:
+    command: 'build'
+    projects: |
+      **/Azure1.csproj
+      **/Azure2.csproj
+      **/UITest.csproj
+    arguments: '--configuration $(BuildConfiguration)'
 
-    - task: DotNetCoreCLI@2
-      displayName: 'Run Automated Unit Tests' 
-      inputs:
-        command: 'test'
-        projects: '**/UITest.csproj'
-        arguments: '--no-restore'
-    
-    - task: DockerInstaller@0
-      inputs:
-        dockerVersion: '17.09.0-ce'
+- task: DotNetCoreCLI@2
+  displayName: 'Run Automated Unit Tests' 
+  inputs:
+    command: 'test'
+    projects: '**/UITest.csproj'
+    arguments: '--no-restore'
+
+- task: DockerInstaller@0
+  inputs:
+    dockerVersion: '17.09.0-ce'
