@@ -6,7 +6,6 @@ trigger:
 - main
 
 variables:
-  solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -14,8 +13,6 @@ jobs:
 - job: Build
     pool:
       vmImage: 'windows-latest'
-    
-    parallel: 1
     
     steps:
     - task: NuGetToolInstaller@1
@@ -30,17 +27,33 @@ jobs:
       packageType: 'sdk'
       version: '7.0.x'
 
-    - task: VSBuild@1
+    - task: DotNetCoreCLI@2
       inputs:
-        solution: '$(solution)'
-        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
+        command: 'restore'
+        projects: |
+        **/Azure1.csproj
+        **/Azure2.csproj
+        **/UITest.csproj
+        feedsToUse: 'config'
+        nugetConfigPath: 'NuGet.config'
+      displayName: Restore PRSQRL_Nest Nuget Packages
 
-    - task: VSTest@2
+    - task: DotNetCoreCLI@2
+      displayName: 'Build PRSQRL'
       inputs:
-        platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
+        command: 'build'
+        projects: |
+        **/Azure1.csproj
+        **/Azure2.csproj
+        **/UITest.csproj
+      arguments: '--configuration $(BuildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run Automated Unit Tests' 
+      inputs:
+        command: 'test'
+        projects: '**/UITest.csproj'
+        arguments: '--no-restore'
     
     - task: DockerInstaller@0
       inputs:
