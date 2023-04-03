@@ -14,7 +14,7 @@ pool:
   vmImage: 'windows-latest'
 
 jobs:
-- job: Build
+  - job: Build
     steps:
     - task: NuGetToolInstaller@1
 
@@ -25,16 +25,16 @@ jobs:
     - task: UseDotNet@2
       displayName: 'Install .NET 7.0 SDK'
       inputs:
-      packageType: 'sdk'
-      version: '7.0.x'
+        packageType: 'sdk'
+        version: '7.0.x'
 
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
         projects: |
-        **/Azure1.csproj
-        **/Azure2.csproj
-        **/UITest.csproj
+          **/Azure1.csproj
+          **/Azure2.csproj
+          **/UITest.csproj
         feedsToUse: 'config'
         nugetConfigPath: 'NuGet.config'
       displayName: Restore PRSQRL_Nest Nuget Packages
@@ -44,10 +44,10 @@ jobs:
       inputs:
         command: 'build'
         projects: |
-        **/Azure1.csproj
-        **/Azure2.csproj
-        **/UITest.csproj
-      arguments: '--configuration $(BuildConfiguration)'
+          **/Azure1.csproj
+          **/Azure2.csproj
+          **/UITest.csproj
+        arguments: '--configuration $(BuildConfiguration)'
 
     - task: DotNetCoreCLI@2
       displayName: 'Run Automated Unit Tests' 
