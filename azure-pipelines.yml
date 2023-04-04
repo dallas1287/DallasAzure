@@ -32,8 +32,6 @@ steps:
       **/Azure1.csproj
       **/Azure2.csproj
       **/UITest.csproj
-    feedsToUse: 'config'
-    nugetConfigPath: 'NuGet.config'
   displayName: Restore PRSQRL_Nest Nuget Packages
 
 - task: DotNetCoreCLI@2
