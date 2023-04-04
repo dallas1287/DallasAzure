@@ -63,4 +63,4 @@ steps:
     containerRegistry: 'DockerRegistry'
 
 - script: |
-    docker run --name mycontainer -p 8000:8000 $(dynamoDbImage)
+    docker run --name mycontainer -d -p 8000:8000 $(dynamoDbImage)
