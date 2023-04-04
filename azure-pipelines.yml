@@ -8,7 +8,7 @@ trigger:
 variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  dynamoDbImage: 'amazon/dynamodb-latest'
+  dynamoDbImage: 'amazon/dynamodb-local'
 
 pool:
   vmImage: 'windows-latest'
