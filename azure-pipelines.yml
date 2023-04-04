@@ -11,7 +11,7 @@ variables:
   dynamoDbImage: 'amazon/dynamodb-local'
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 steps:
 - task: NuGetToolInstaller@1
