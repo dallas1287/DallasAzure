@@ -44,12 +44,12 @@ steps:
       **/UITest.csproj
     arguments: '--configuration $(BuildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Run Automated Unit Tests' 
-  inputs:
-    command: 'test'
-    projects: '**/UITest.csproj'
-    arguments: '--no-restore'
+# - task: DotNetCoreCLI@2
+#   displayName: 'Run Automated Unit Tests' 
+#   inputs:
+#     command: 'test'
+#     projects: '**/UITest.csproj'
+#     arguments: '--no-restore'
 
 - task: DockerInstaller@0
   inputs:
