@@ -54,5 +54,9 @@ steps:
 - task: DockerInstaller@0
   inputs:
     dockerVersion: '17.09.0-ce'
-- script: |
-    docker run -p 8000:8000 amazon/dynamodb-local
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'MyDockerRegistryServiceConnection'
+    repository: 'mydockerimage'
+    arguments: 'run --name mycontainer -p 8000:8000 amazon/dynamodb-local'
