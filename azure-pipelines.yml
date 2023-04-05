@@ -51,7 +51,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/Azure1.csproj'
-    arguments: --no-build -c $(BuildConfiguration) -o release
+    arguments: -c $(BuildConfiguration) -o release
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish Azure2'
@@ -59,7 +59,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/Azure2.csproj'
-    arguments: --no-build -c $(BuildConfiguration) -o release
+    arguments: -c $(BuildConfiguration) -o release
 
 - task: CmdLine@2
   inputs:
