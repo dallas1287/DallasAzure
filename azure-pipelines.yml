@@ -65,7 +65,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'ls release'
+    script: 'ls release/Azure1'
     
 # - task: DotNetCoreCLI@2
 #   displayName: 'Run Automated Unit Tests' 
