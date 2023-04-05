@@ -65,7 +65,6 @@ steps:
   displayName: 'Run Azure 1'
   inputs:
     script: |
-      pwd
       ls
 
 # - task: DotNetCoreCLI@2
