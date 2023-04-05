@@ -68,7 +68,7 @@ steps:
   inputs:
    targetType: 'inline'
    script: |
-     ls
+     ls release
 
 # - task: PowerShell@2
 #   inputs:
