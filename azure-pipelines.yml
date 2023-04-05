@@ -79,10 +79,6 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'google-chrome --version'
-
-- task: CmdLine@2
-  inputs:
     script: './release/Azure1/Azure1 --urls=https://localhost:7005 &'
 - task: CmdLine@2
   inputs:
