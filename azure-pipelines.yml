@@ -11,7 +11,7 @@ variables:
   dynamoDbImage: 'amazon/dynamodb-local'
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -44,43 +44,29 @@ steps:
       **/Azure2.csproj
       **/UITest.csproj
     arguments: '--configuration $(BuildConfiguration)'
-
+    
 - task: DotNetCoreCLI@2
   displayName: 'Publish Azure1'
   inputs:
     command: 'publish'
     publishWebProjects: false
     projects: '**/Azure1.csproj'
-    arguments: --no-build --configuration $(BuildConfiguration)
-    
+    arguments: --no-build -c $(BuildConfiguration) -o release
+
 - task: DotNetCoreCLI@2
   displayName: 'Publish Azure2'
   inputs:
     command: 'publish'
     publishWebProjects: false
     projects: '**/Azure2.csproj'
-    arguments: --no-build --configuration $(BuildConfiguration)
-    
-- task: IISWebAppManagementOnMachineGroup@0
-  inputs:
-    IISDeploymentType: 'IISWebsite'
-    ActionIISWebsite: 'CreateOrUpdateWebsite'
-    WebsiteName: 'Dallas1'
-    WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
-    WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
-    CreateOrUpdateAppPoolForWebsite: true
-    AppPoolName: 'Dallas1'
-    AppPoolNameForWebsite: 'Dallas1'
-    AppPoolNameForApplication: 'Dallas1'
-    DotNetVersionForWebsite: 'v4.0'
-    PipeLineModeForWebsite: 'Integrated'
-    AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
+    arguments: --no-build -c $(BuildConfiguration) -o release
 
-- task: IISWebAppDeploymentOnMachineGroup@0
+- task: PowerShell@2
+  displayName: 'Run Azure 1'
   inputs:
-    WebSiteName: 'Dallas1'
-    VirtualApplication: 'Dallas1'
-    Package: '$(System.DefaultWorkingDirectory)\**\*.zip'
+    script: |
+      pwd
+      ls
 
 # - task: DotNetCoreCLI@2
 #   displayName: 'Run Automated Unit Tests' 
