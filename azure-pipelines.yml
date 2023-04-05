@@ -45,6 +45,20 @@ steps:
       **/UITest.csproj
     arguments: '--configuration $(BuildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/Azure1.csproj'
+    arguments: --no-build --configuratin $(BuildConfiguration)
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/Azure2.csproj'
+    arguments: --no-build --configuratin $(BuildConfiguration)
+    
 - task: IISWebAppManagementOnMachineGroup@0
   inputs:
     IISDeploymentType: 'IISWebsite'
