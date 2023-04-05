@@ -65,14 +65,18 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'ls release/Azure1'
+    script: './release/Azure1/Azure1 &'
     
-# - task: DotNetCoreCLI@2
-#   displayName: 'Run Automated Unit Tests' 
-#   inputs:
-#     command: 'test'
-#     projects: '**/UITest.csproj'
-#     arguments: '--no-restore'
+- task: CmdLine@2
+  inputs:
+    script: './release/Azure2/Azure2 &'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run Automated Unit Tests' 
+  inputs:
+    command: 'test'
+    projects: '**/UITest.csproj'
+    arguments: '--no-restore'
 
 - task: DockerInstaller@0
   inputs:
