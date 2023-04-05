@@ -64,28 +64,29 @@ steps:
     arguments: -c $(BuildConfiguration) -o release
 
 - task: PowerShell@2
-  displayName: Show me stuff
-  inputs:
-   targetType: 'inline'
-   script: |
-     ls release/Azure1
-
-- task: PowerShell@2
+  displayName: Run Azure1
   inputs:
     targetType: 'inline'
     script: |
       Start-Process -FilePath "Azure1.exe" -WorkingDirectory "release\Azure1" -ArgumentList "--urls=https://localhost:7005"
     
+- task: PowerShell@2
+  displayName: Rune Azure2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Start-Process -FilePath "Azure2.exe" -WorkingDirectory "release\Azure2" -ArgumentList "--urls=https://localhost:7225"
+
 # - task: CmdLine@2
 #   inputs:
 #     script: './release/Azure2/Azure2 --urls=https://locahost:7225 &'
 
-# - task: DotNetCoreCLI@2
-#   displayName: 'Run Automated Unit Tests' 
-#   inputs:
-#     command: 'test'
-#     projects: '**/UITest.csproj'
-#     arguments: '--no-restore'
+- task: DotNetCoreCLI@2
+  displayName: 'Run Automated Unit Tests' 
+  inputs:
+    command: 'test'
+    projects: '**/UITest.csproj'
+    arguments: '--no-restore'
 
 # # - task: DockerInstaller@0
 # #   inputs:
