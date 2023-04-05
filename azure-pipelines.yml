@@ -74,7 +74,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Start.Process -FilePath "Azure1.exe" -WorkingDirectory "release\Azure1" -ArgumentsList "--urls=https://localhost:7005"
+      Start-Process -FilePath "Azure1.exe" -WorkingDirectory "release\Azure1" -ArgumentsList "--urls=https://localhost:7005"
     
 # - task: CmdLine@2
 #   inputs:
