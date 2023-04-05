@@ -70,11 +70,11 @@ steps:
    script: |
      ls release/Azure1
 
-# - task: PowerShell@2
-#   inputs:
-#     targetType: 'inline'
-#     script: |
-#       Start.Process -FilePath 'release/Azure1/Azure1' -ArgumentsList --urls=https://localhost:7005 &'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Start.Process -FilePath "Azure1.exe" -WorkingDirectory "release\Azure1" -ArgumentsList "--urls=https://localhost:7005"
     
 # - task: CmdLine@2
 #   inputs:
