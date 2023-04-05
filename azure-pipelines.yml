@@ -64,14 +64,21 @@ steps:
     arguments: -c $(BuildConfiguration) -o release
 
 - task: PowerShell@2
+  displayName: Show me stuff
   inputs:
-    targetType: 'inline'
-    script: './release/Azure1/Azure1 --urls=https://localhost:7005 &'
+   targetType: 'inline'
+   script: |
+     pwd
+
+# - task: PowerShell@2
+#   inputs:
+#     targetType: 'inline'
+#     script: './release/Azure1/Azure1 --urls=https://localhost:7005 &'
     
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: './release/Azure2/Azure2 --urls=https://locahost:7225 &'
+# - task: PowerShell@2
+#   inputs:
+#     targetType: 'inline'
+#     script: './release/Azure2/Azure2 --urls=https://locahost:7225 &'
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Automated Unit Tests' 
