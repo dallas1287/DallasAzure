@@ -61,12 +61,12 @@ steps:
     projects: '**/Azure2.csproj'
     arguments: --no-build -c $(BuildConfiguration) -o release
 
-- task: PowerShell@2
-  displayName: 'Run Azure 1'
+- task: AzureCLI@2
   inputs:
-    script: |
-      ls
-
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'ls'
+    
 # - task: DotNetCoreCLI@2
 #   displayName: 'Run Automated Unit Tests' 
 #   inputs:
