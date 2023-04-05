@@ -63,11 +63,11 @@ steps:
     projects: '**/Azure2.csproj'
     arguments: -c $(BuildConfiguration) -o release
 
-- task: CmdLine@2
+- task: PowerShell@2
   inputs:
     script: './release/Azure1/Azure1 --urls=https://localhost:7005 &'
     
-- task: CmdLine@2
+- task: PowerShell@2
   inputs:
     script: './release/Azure2/Azure2 --urls=https://locahost:7225 &'
 
