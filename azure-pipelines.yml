@@ -63,7 +63,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'ls'
+    script: 'ls release'
     
 # - task: DotNetCoreCLI@2
 #   displayName: 'Run Automated Unit Tests' 
