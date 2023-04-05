@@ -11,7 +11,7 @@ variables:
   dynamoDbImage: 'amazon/dynamodb-local'
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -36,7 +36,7 @@ steps:
   displayName: Restore PRSQRL_Nest Nuget Packages
 
 - task: DotNetCoreCLI@2
-  displayName: 'Build PRSQRL'
+  displayName: 'Build Projects'
   inputs:
     command: 'build'
     projects: |
@@ -78,15 +78,15 @@ steps:
     projects: '**/UITest.csproj'
     arguments: '--no-restore'
 
-- task: DockerInstaller@0
-  inputs:
-    dockerVersion: '17.09.0-ce'
+# # - task: DockerInstaller@0
+# #   inputs:
+# #     dockerVersion: '17.09.0-ce'
 
-- task: Docker@2
-  displayName: Run DynamoDB container
-  inputs:
-    command: login
-    containerRegistry: 'DockerRegistry'
+# # - task: Docker@2
+# #   displayName: Run DynamoDB container
+# #   inputs:
+# #     command: login
+# #     containerRegistry: 'DockerRegistry'
 
-- script: |
-    docker run --name mycontainer -d -p 8000:8000 $(dynamoDbImage)
+# # - script: |
+# #     docker run --name mycontainer -d -p 8000:8000 $(dynamoDbImage)
