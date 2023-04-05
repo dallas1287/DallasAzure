@@ -65,11 +65,11 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: './release/Azure1/Azure1 &'
+    script: './release/Azure1/Azure1 --urls=https://localhost:7005 &'
     
 - task: CmdLine@2
   inputs:
-    script: './release/Azure2/Azure2 &'
+    script: './release/Azure2/Azure2 --urls=https://locahost:7225 &'
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Automated Unit Tests' 
