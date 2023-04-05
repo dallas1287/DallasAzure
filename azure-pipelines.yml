@@ -46,18 +46,20 @@ steps:
     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Publish Azure1'
   inputs:
     command: 'publish'
     publishWebProjects: false
     projects: '**/Azure1.csproj'
-    arguments: --no-build --configuratin $(BuildConfiguration)
+    arguments: --no-build --configuration $(BuildConfiguration)
     
 - task: DotNetCoreCLI@2
+  displayName: 'Publish Azure2'
   inputs:
     command: 'publish'
     publishWebProjects: false
     projects: '**/Azure2.csproj'
-    arguments: --no-build --configuratin $(BuildConfiguration)
+    arguments: --no-build --configuration $(BuildConfiguration)
     
 - task: IISWebAppManagementOnMachineGroup@0
   inputs:
