@@ -50,6 +50,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
+    zipAfterPublish: false
     projects: '**/Azure1.csproj'
     arguments: -c $(BuildConfiguration) -o release
 
@@ -58,6 +59,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
+    zipAfterPublish: false
     projects: '**/Azure2.csproj'
     arguments: -c $(BuildConfiguration) -o release
 
