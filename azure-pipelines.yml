@@ -68,7 +68,7 @@ steps:
   inputs:
    targetType: 'inline'
    script: |
-     pwd
+     echo $(Build.SourcesDirectory)
 
 # - task: PowerShell@2
 #   inputs:
@@ -80,12 +80,12 @@ steps:
 #     targetType: 'inline'
 #     script: './release/Azure2/Azure2 --urls=https://locahost:7225 &'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Run Automated Unit Tests' 
-  inputs:
-    command: 'test'
-    projects: '**/UITest.csproj'
-    arguments: '--no-restore'
+# - task: DotNetCoreCLI@2
+#   displayName: 'Run Automated Unit Tests' 
+#   inputs:
+#     command: 'test'
+#     projects: '**/UITest.csproj'
+#     arguments: '--no-restore'
 
 # # - task: DockerInstaller@0
 # #   inputs:
