@@ -4,10 +4,11 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 trigger:
   branches:
+    include:
+      - '*'    
     exclude:
       - main
-    include:
-      - '*'
+
 
 variables:
   buildPlatform: 'Any CPU'
