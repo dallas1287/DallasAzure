@@ -1,0 +1,41 @@
+on: push
+
+env:
+    AWS_REGION: us-east-2
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: DallasAzure
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Publish
+      run: dotnet publish -c Release -o release
+
+      # web api expects appsettings in the directory its run from
+      # not the directory that it exists in so we have to copy it here
+      # to ensure that it's found and read since we are running it from it's publish directory
+    - name: Move appsettings workaround
+      run: cp ./release/appsettings.json ./appsettings.json
+
+    - name: Run Api
+      run: ./release/DallasAzure --urls=https://localhost:7005 &
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
