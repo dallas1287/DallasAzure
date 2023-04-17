@@ -20,9 +20,7 @@ jobs:
         dotnet-version: 7.0.x
 
     - name: where am i
-      run: |
-        pwd
-        ls
+      run: pwd
 
     - name: Restore dependencies
       run: dotnet restore
