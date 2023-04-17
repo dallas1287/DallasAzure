@@ -25,7 +25,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore Azure1.sln
 
-    - name: Publish
+    - name: Publish Azure1
       run: dotnet publish **/*Azure1.csproj -c Release -o release1
       
     - name: Publish Azure2
