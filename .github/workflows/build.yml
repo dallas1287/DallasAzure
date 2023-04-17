@@ -37,8 +37,8 @@ jobs:
     # - name: Move appsettings workaround
       # run: cp ./release/appsettings.json ./appsettings.json
       
-    - name: where am i
-      run: ls -a release1
+    - name: chrome version
+      run: google-chrome --version
 
     - name: Run Azure1
       run: ./release1/Azure1 --urls=https://localhost:7005 &
