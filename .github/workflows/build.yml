@@ -8,9 +8,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    # defaults:
-      # run:
-        # working-directory: DallasAzure
+    defaults:
+      run:
+        working-directory: Azure1
     
     steps:
     - uses: actions/checkout@v2
