@@ -41,10 +41,10 @@ jobs:
       run: google-chrome --version
 
     - name: Run Azure1
-      run: ./release1/Azure1 --urls=https://localhost:7005 &
+      run: ./release1/Azure1 &
       
     - name: Run Azure2
-      run: ./release2/Azure2 --urls=https://localhost:7225 &
+      run: ./release2/Azure2 &
 
     - name: Test
       run: dotnet test **/*UITest.csproj --no-build --no-restore --verbosity normal
