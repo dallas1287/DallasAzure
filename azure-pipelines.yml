@@ -102,6 +102,12 @@ steps:
 #     targetType: 'inline'
 #     script: |
 #       Start-Process -FilePath "Azure2.exe" -WorkingDirectory "release\Azure2" -ArgumentList "--urls=https://localhost:7225"
+
+- task: CmdLine@2
+  displayName: Where Am I?
+  inputs:
+    script: |
+      ls -a
  
 - task: CmdLine@2
   displayName: Run Web Apps
