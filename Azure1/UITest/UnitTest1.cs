@@ -14,21 +14,21 @@ public class UnitTest1 : IClassFixture<DriverFixture>
     [Fact]
     public void Test1()
     {
-        _driver.Navigate().GoToUrl("https://localhost:7005");
+        _driver.Navigate().GoToUrl("https://localhost:7225");
 
         Thread.Sleep(500);
 
-        var site1Header = DriverHelpers.WaitForElement(_driver, By.XPath("/html/body/div[1]/main/article/h1"));
-        Assert.NotNull(site1Header);
-        Assert.Equal("Blazor App Number 1", site1Header.Text);
+        var site2Header = DriverHelpers.WaitForElement(_driver, By.XPath("/html/body/div[1]/main/article/h1"));
+        Assert.NotNull(site2Header);
+        Assert.Equal("Blazor App Number 2", site2Header.Text);
 
         var otherSiteLink = DriverHelpers.WaitForElement(_driver, By.XPath("/html/body/div[1]/main/article/a"));
         Assert.NotNull(otherSiteLink);
         otherSiteLink.Click();
 
-        var site2Header = DriverHelpers.WaitForElement(_driver, By.XPath("/html/body/div[1]/main/article/h1"));
-        Assert.NotNull(site2Header);
-        Assert.Equal("Blazor App Number 2", site2Header.Text);
+        var site1Header = DriverHelpers.WaitForElement(_driver, By.XPath("/html/body/div[1]/main/article/h1"));
+        Assert.NotNull(site1Header);
+        Assert.Equal("Blazor App Number 1", site1Header.Text);
     }
 
     [Fact]
