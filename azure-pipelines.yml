@@ -48,24 +48,6 @@ steps:
       **/UITest.csproj
     arguments: '--configuration $(BuildConfiguration)'
     
-- task: DotNetCoreCLI@2
-  displayName: 'Publish Azure1'
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    zipAfterPublish: false
-    projects: '**/Azure1.csproj'
-    arguments: -c $(BuildConfiguration) -o release
-
-- task: DotNetCoreCLI@2
-  displayName: 'Publish Azure2'
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    zipAfterPublish: false
-    projects: '**/Azure2.csproj'
-    arguments: -c $(BuildConfiguration) -o release
-    
 - task: DockerInstaller@0
   inputs:
     dockerVersion: '17.09.0-ce'
@@ -81,7 +63,25 @@ steps:
     
 - script: |
     docker run --name vitruviansql -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Pwd12345!" -p 5433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Azure1'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    zipAfterPublish: false
+    projects: '**/Azure1.csproj'
+    arguments: -c $(BuildConfiguration) -o releaseAzure1
 
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Azure2'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    zipAfterPublish: false
+    projects: '**/Azure2.csproj'
+    arguments: -c $(BuildConfiguration) -o releaseAzure2
+    
 # - task: PowerShell@2
 #   displayName: Run Azure1
 #   inputs:
@@ -98,10 +98,10 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: './release/Azure1/Azure1 --urls=https://localhost:7005 &'
+    script: './releaseAzure1/Azure1/Azure1 --urls=https://localhost:7005 &'
 - task: CmdLine@2
   inputs:
-    script: './release/Azure2/Azure2 --urls=https://localhost:7225 &'
+    script: './releaseAzure2/Azure2/Azure2 --urls=https://localhost:7225 &'
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Automated Unit Tests' 
