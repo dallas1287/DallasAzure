@@ -28,6 +28,12 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '7.0.x'
+    
+- task: CmdLine@2
+    displayName: Run Docker Containers
+      inputs:
+        script: |
+          google-chrome --version
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -58,12 +64,13 @@ steps:
     command: login
     containerRegistry: 'DockerRegistry'
 
-- script: |
-    docker run --name mycontainer -d -p 8000:8000 $(dynamoDbImage)
-    
-- script: |
-    docker run --name mssql -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Pwd12345!" -p 5433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
-    
+- task: CmdLine@2
+    displayName: Run Docker Containers
+      inputs:
+        script: |
+          docker run --name mycontainer -d -p 8000:8000 $(dynamoDbImage)
+          docker run --name mssql -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Pwd12345!" -p 5433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+
 - task: DotNetCoreCLI@2
   displayName: 'Publish Azure1'
   inputs:
@@ -95,13 +102,13 @@ steps:
 #     targetType: 'inline'
 #     script: |
 #       Start-Process -FilePath "Azure2.exe" -WorkingDirectory "release\Azure2" -ArgumentList "--urls=https://localhost:7225"
-
+ 
 - task: CmdLine@2
+  displayName: Run Web Apps
   inputs:
-    script: './releaseAzure1/Azure1/Azure1 --urls=https://localhost:7005 &'
-- task: CmdLine@2
-  inputs:
-    script: './releaseAzure2/Azure2/Azure2 --urls=https://localhost:7225 &'
+    script: |
+      './releaseAzure1/Azure1/Azure1 --urls=https://localhost:7005 &'
+      './releaseAzure2/Azure2/Azure2 --urls=https://localhost:7225 &'
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Automated Unit Tests' 

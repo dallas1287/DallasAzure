@@ -15,10 +15,6 @@ public class DriverFixture : IDisposable
         //chromeOptions.AddArgument("headless");
 
         Driver = new ChromeDriver(chromeOptions);
-        //TODO: FIGURE OUT HOW TO AUTOMATE TESTS
-        //      TO RE-RUN FOR EACH BROWSER
-        //Driver = new FirefoxDriver();
-        //Driver = new SafariDriver();
     }
 
     public void Dispose()
