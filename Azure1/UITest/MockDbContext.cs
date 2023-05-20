@@ -10,7 +10,7 @@ namespace UITest;
 
 public class MockDbContext : AzureDbContext
 {
-    public static readonly string DefaultConnString = "Server=localhost,5433;User ID=sa;Password=Pwd12345!;Database=Vitruvian;TrustServerCertificate=True;";
+    public static readonly string DefaultConnString = "Server=localhost,5433;User ID=sa;Password=Pwd12345!;Database=AzureTest;TrustServerCertificate=True;";
     public string ConnString { get; set; } = DefaultConnString;
     public MockDbContext(DbContextOptions<AzureDbContext> options) : base(options)
     {
