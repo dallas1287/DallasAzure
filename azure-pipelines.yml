@@ -30,10 +30,10 @@ steps:
     version: '7.0.x'
     
 - task: CmdLine@2
-  displayName: Run Docker Containers
-    inputs:
-      script: |
-        google-chrome --version
+  displayName: Chrome version
+  inputs:
+    script: |
+      google-chrome --version
 
 - task: DotNetCoreCLI@2
   inputs:
