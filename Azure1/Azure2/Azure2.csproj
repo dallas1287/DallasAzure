@@ -7,6 +7,10 @@
     <UserSecretsId>aspnet-Azure2-f931d5bf-8fda-43ea-a4d7-4d9c1156f63c</UserSecretsId>
   </PropertyGroup>
 
+    <PropertyGroup>
+	    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.1" />
