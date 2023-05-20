@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using Azure1.Models;
+@using Azure1.Repositories;
+@using Microsoft.EntityFrameworkCore;
+@inject UnitOfWork uow;
 
 <PageTitle>Index</PageTitle>
 
@@ -6,4 +10,42 @@
 
 <a href="https://localhost:7005">Go to Azure 1</a>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<button class="btn btn-primary" @onclick=CreateUser>Create User</button>
+
+<button class="btn btn-primary" @onclick=FetchUser>Fetch User</button>
+
+<button class="btn btn-primary" @onclick=DeleteUser>Delete User</button>
+
+<p>@FoundUsername</p>
+
+@code {
+    string FoundUsername { get; set; } = "User Not Found";
+
+    async Task CreateUser()
+    {
+        var user = new UserModel()
+            {
+                Username = "Azure 2 User",
+                Email = "Azure 2 Email",
+                FirstName = "Azure 2 FirstName",
+                LastName = "Azure 2 LastName"
+            };
+        uow.UserRepo.Insert(user);
+        await uow.SaveAsync();
+    }
+
+    async Task FetchUser()
+    {
+        var found = await uow.UserRepo.GetQueryAsNoTracking(u => u.Username == "Azure 1 User").FirstOrDefaultAsync();
+        FoundUsername = found != null ? found.Username : "Search Found Nothing";
+        StateHasChanged();
+    }
+
+    async Task DeleteUser()
+    {
+        var found = await uow.UserRepo.GetFirstAsync(u => u.Username == "Azure 2 User");
+        if (found == null) return;
+        uow.UserRepo.Delete(found);
+        await uow.SaveAsync();
+    }
+}

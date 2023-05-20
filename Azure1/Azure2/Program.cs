@@ -1,10 +1,9 @@
-using Azure2.Areas.Identity;
-using Azure2.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
+using Amazon.DynamoDBv2;
+using Amazon.Runtime;
+using Azure1.Data;
+using Azure1.Dynamo;
+using Azure1.Dynamo.DataAccess;
+using Azure1.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +11,37 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-builder.Services.AddSingleton<WeatherForecastService>();
+
+string? connString = builder.Environment.IsStaging() ? "Server=localhost,5433;User ID=sa;Password=Pwd12345!;Database=AzureTest;TrustServerCertificate=True;" : null;
+var localConnString = "Data Source=localhost;Database=AzureTest;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
+
+builder.Services.AddDbContext<AzureDbContext>(options =>
+    options.UseSqlServer(
+        connString ?? localConnString,
+        sqlServerOptions =>
+        {
+            sqlServerOptions.EnableRetryOnFailure(10, TimeSpan.FromSeconds(5), null);
+            sqlServerOptions.CommandTimeout(120);
+        }
+        ));
+
+builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped<UserRepository>();
+
+if (builder.Environment.IsStaging())
+{
+    builder.Services.AddSingleton(new AmazonDynamoDBClient(
+                    new BasicAWSCredentials("AAAAAAAAAAAAAAAAAAAA", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+                    new AmazonDynamoDBConfig { ServiceURL = "http://localhost:8000" }));
+    builder.Services.AddSingleton<IDatabaseAccess, LocalMockDataAccess>();
+}
+else
+{
+    builder.Services.AddSingleton<AmazonDynamoDBClient>();
+    builder.Services.AddSingleton<IDatabaseAccess, DynamoDataAccess>();
+}
+
+builder.Services.AddSingleton<LicenseData>();
 
 var app = builder.Build();
 
@@ -34,8 +62,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseAuthorization();
 
 app.MapControllers();
 app.MapBlazorHub();

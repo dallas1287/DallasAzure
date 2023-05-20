@@ -10,7 +10,7 @@ trigger:
 
 variables:
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  buildConfiguration: 'Staging'
   dynamoDbImage: 'amazon/dynamodb-local'
 
 pool:
@@ -65,6 +65,22 @@ steps:
     zipAfterPublish: false
     projects: '**/Azure2.csproj'
     arguments: -c $(BuildConfiguration) -o release
+    
+- task: DockerInstaller@0
+  inputs:
+    dockerVersion: '17.09.0-ce'
+
+- task: Docker@2
+  displayName: Run DynamoDB container
+  inputs:
+    command: login
+    containerRegistry: 'DockerRegistry'
+
+- script: |
+    docker run --name mycontainer -d -p 8000:8000 $(dynamoDbImage)
+    
+- script: |
+    docker run --name vitruviansql -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Pwd12345!" -p 5433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
 
 # - task: PowerShell@2
 #   displayName: Run Azure1
@@ -93,16 +109,3 @@ steps:
     command: 'test'
     projects: '**/UITest.csproj'
     arguments: '--no-restore'
-
-- task: DockerInstaller@0
-  inputs:
-    dockerVersion: '17.09.0-ce'
-
-- task: Docker@2
-  displayName: Run DynamoDB container
-  inputs:
-    command: login
-    containerRegistry: 'DockerRegistry'
-
-- script: |
-    docker run --name mycontainer -d -p 8000:8000 $(dynamoDbImage)
