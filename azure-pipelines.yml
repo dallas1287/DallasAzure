@@ -10,7 +10,7 @@ trigger:
 
 variables:
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Staging'
+  buildConfiguration: 'Release'
   dynamoDbImage: 'amazon/dynamodb-local'
 
 pool:
@@ -107,7 +107,7 @@ steps:
   displayName: Run Web App 1
   inputs:
     script: |
-      ./releaseAzure1/Azure1/Azure1 --urls=https://localhost:7005 &
+      ./releaseAzure1/Azure1/Azure1 --environment=Staging --urls=https://localhost:7005 &
   env:
    TASKLIB_TEST_TOOLRUNNER_EXITDELAY: 60000 
       
@@ -115,7 +115,7 @@ steps:
   displayName: Run Web App 2
   inputs:
     script: |
-      ./releaseAzure2/Azure2/Azure2 --urls=https://localhost:7225 &
+      ./releaseAzure2/Azure2/Azure2 --environment=Staging --urls=https://localhost:7225 &
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Automated Unit Tests' 
