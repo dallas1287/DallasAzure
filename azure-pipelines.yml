@@ -28,12 +28,6 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '7.0.x'
-    
-- task: CmdLine@2
-  displayName: Chrome version
-  inputs:
-    script: |
-      google-chrome --version
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -109,7 +103,7 @@ steps:
     script: |
       ./releaseAzure1/Azure1/Azure1 --environment=Staging --urls=https://localhost:7005 &
   env:
-   TASKLIB_TEST_TOOLRUNNER_EXITDELAY: 60000 
+   TASKLIB_TEST_TOOLRUNNER_EXITDELAY: 30000 
       
 - task: CmdLine@2
   displayName: Run Web App 2

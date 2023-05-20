@@ -12,7 +12,7 @@ public class DriverFixture : IDisposable
         var chromeOptions = new ChromeOptions();
         chromeOptions.AddArgument("--ignore-ssl-errors=yes");
         chromeOptions.AddArgument("--ignore-certificate-errors");
-        //chromeOptions.AddArgument("headless");
+        chromeOptions.AddArgument("headless");
 
         Driver = new ChromeDriver(chromeOptions);
     }
