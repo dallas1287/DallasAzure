@@ -59,7 +59,7 @@ steps:
     dockerVersion: '17.09.0-ce'
 
 - task: Docker@2
-  displayName: Run DynamoDB container
+  displayName: Login to Docker
   inputs:
     command: login
     containerRegistry: 'DockerRegistry'
@@ -107,14 +107,21 @@ steps:
   displayName: Where Am I?
   inputs:
     script: |
-      ls -a
+      ls -a releaseAzure1
  
 - task: CmdLine@2
-  displayName: Run Web Apps
+  displayName: Run Web App 1
   inputs:
     script: |
-      './releaseAzure1/Azure1/Azure1 --urls=https://localhost:7005 &'
-      './releaseAzure2/Azure2/Azure2 --urls=https://localhost:7225 &'
+      ./releaseAzure1/Azure1/Azure1 --urls=https://localhost:7005 &
+  env:
+   TASKLIB_TEST_TOOLRUNNER_EXITDELAY: 60000 
+      
+- task: CmdLine@2
+  displayName: Run Web App 2
+  inputs:
+    script: |
+      ./releaseAzure2/Azure2/Azure2 --urls=https://localhost:7225 &
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Automated Unit Tests' 
