@@ -66,10 +66,10 @@ steps:
 
 - task: CmdLine@2
   displayName: Run Docker Containers
-    inputs:
-      script: |
-        docker run --name mycontainer -d -p 8000:8000 $(dynamoDbImage)
-        docker run --name mssql -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Pwd12345!" -p 5433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+  inputs:
+    script: |
+      docker run --name mycontainer -d -p 8000:8000 $(dynamoDbImage)
+      docker run --name mssql -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Pwd12345!" -p 5433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish Azure1'
