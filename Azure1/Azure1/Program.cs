@@ -16,6 +16,8 @@ builder.Services.AddServerSideBlazor();
 string? connString = builder.Environment.IsStaging() ? "Server=localhost,5433;User ID=sa;Password=Pwd12345!;Database=AzureTest;TrustServerCertificate=True;" : null;
 var localConnString = "Data Source=localhost;Database=AzureTest;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
 
+Console.WriteLine(connString);
+
 builder.Services.AddDbContext<AzureDbContext>(options =>
     options.UseSqlServer(
         connString ?? localConnString,
