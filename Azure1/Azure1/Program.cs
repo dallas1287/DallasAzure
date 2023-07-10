@@ -32,7 +32,7 @@ builder.Services.AddScoped<UserRepository>();
 if (builder.Environment.IsStaging())
 {
     builder.Services.AddSingleton(new AmazonDynamoDBClient(
-                    new BasicAWSCredentials("AAAAAAAAAAAAAAAAAAAA", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+                    new BasicAWSCredentials("AAAAAAAAAAAAAAAAAAAA", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
                     new AmazonDynamoDBConfig { ServiceURL = "http://localhost:8000" }));
     builder.Services.AddSingleton<IDatabaseAccess, LocalMockDataAccess>();
 }
